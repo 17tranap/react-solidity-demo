@@ -21,7 +21,11 @@
   "react": "^16.2.0",
   "react-dom": "^16.2.0",
   "style-loader": "^0.20.1",
+  "truffle": "^4.0.6",
   "webpack": "^3.10.0",
   "webpack-dev-server": "^2.11.1"
+ },
+ "dependencies": {
+  "web3": "^0.20.0"
  }
 }

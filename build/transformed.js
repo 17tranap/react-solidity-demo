@@ -951,8 +951,17 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 		return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 			'div',
 			{ className: 'solidity' },
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				'h3',
+				{ 'class': 'label' },
+				' Test '
+			),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', id: 'name' }),
-			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { onClick: true })
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				'button',
+				{ onClick: '#' },
+				' Send '
+			)
 		);
 	}
 }
