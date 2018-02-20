@@ -1,0 +1,29 @@
+body{
+    font-family: 'open sans';
+    margin: 0;
+}
+
+button{
+    padding: 40px;
+    border: 2px solid rgb(30,134,255);
+    margin-right: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: rgb(30,134,255);
+    color: white;
+}
+button:active{
+    opacity: 0.7;
+}
+*{
+   color: #444444;
+}
+.main-container{
+   padding: 20px;
+}
+.block{
+   display: flex;
+   align-items: center;
+}
