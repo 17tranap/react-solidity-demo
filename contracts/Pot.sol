@@ -5,6 +5,7 @@ contract Pot {
 	uint total;
 	uint minimumContribution;
     address[] contributors;
+    
 	function Pot(uint _minimumContribution) {
 		owner = msg.sender;
 		total = 0;
@@ -22,7 +23,7 @@ contract Pot {
 	}
 	mapping(address => Contributor) contributorInfo;
 
-	function checkContributorExists(address contributor) returns(bool) {
+	function checkContributorExists(address contributor) constant returns(bool) {
 		for(uint i = 0; i < contributors.length; i++) {
 			if(contributors[i] == contributor) return true;
 		}
@@ -46,6 +47,10 @@ contract Pot {
 		    uint moneyIn = contributorInfo[contributors[i]].totalContributed;
 			contributors[i].transfer(moneyIn);
 		}
+	}
+	
+	function minContribution() constant returns(uint){
+	    return minimumContribution;
 	}
 
 	function () payable {}
