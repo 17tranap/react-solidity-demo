@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Web3 from 'web3'
-import './../css/index.css'
+import './../app/index.css'
 
 class App extends React.Component {
 	constructor(props){
@@ -18,16 +18,21 @@ class App extends React.Component {
 	    }
 	    const MyContract = web3.eth.contract([
 			{
-				"constant": false,
+				"constant": true,
 				"inputs": [],
-				"name": "kill",
-				"outputs": [],
+				"name": "minContribution",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
 				"payable": false,
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"constant": false,
+				"constant": true,
 				"inputs": [
 					{
 						"name": "contributor",
@@ -42,13 +47,13 @@ class App extends React.Component {
 					}
 				],
 				"payable": false,
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"constant": false,
 				"inputs": [],
-				"name": "returnMoney",
+				"name": "kill",
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
@@ -69,6 +74,15 @@ class App extends React.Component {
 				"type": "function"
 			},
 			{
+				"constant": false,
+				"inputs": [],
+				"name": "returnMoney",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"name": "_minimumContribution",
@@ -85,7 +99,14 @@ class App extends React.Component {
 				"type": "fallback"
 			}
 		])
-	    this.state.ContractInstance = MyContract.at("0x61d89802d850d2b18cb7d42afc9a39776b38eb97")
+	    this.state.ContractInstance = MyContract.at("0x6f012ed3f2066c475924b71d36d1bd9f22a9ed31")
+	}
+
+	componentDidMount() {
+		this.updateState()
+		this.setupListeners()
+
+		setInterval(this.updateState.bind(this), 10e3)
 	}
 
 	updateState() {
@@ -97,7 +118,7 @@ class App extends React.Component {
 			}
 		})
 		this.state.ContractInstance.total((err, result) => {
-			if{result != null) {
+			if(result != null) {
 				this.setState({
 					total: parseFloat(web3.fromWei(result, 'ether'))
 				})
@@ -127,16 +148,25 @@ class App extends React.Component {
 	}
 
 	render() {
+		let potTotal;
+	      potTotal = "The total amount in the pot is" + this.state.total;
 		return (
 	      <div className="main-container">
-	        <h1>Contribute to the pot</h1>
+	      	<div className="title">
+	        	<h1>Contribute to the pot</h1>
+	        </div>
+
+	        <div className="block">
+	      		<h3 class="label"> How much do you want to contribute? </h3>
+				<input type="pot-input"  ref="ether-input" type="number" placeholder={this.state.minimumContribuion} />
+				<button onClick='#' name="sendButton"> Send </button>
+			</div>
+			
+			<div>{potTotal}</div>
+		  
 	      </div>
 
-	      <div className="block">
-	      	<h3 class="label"> How musch do you want to be? </h3>
-			<input type="pot-input"  ref="ether-input" type="number" placeholder={this.state.minimumContribuion} />
-			<button onClick='#' name="sendButton"> Send </button>
-		  </div>
+	      
 	    );
 	}
 }
