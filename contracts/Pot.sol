@@ -53,5 +53,9 @@ contract Pot {
 	    return minimumContribution;
 	}
 
+	function getTotal() constant returns(uint){
+		return total;
+	}
+
 	function () payable {}
 }

@@ -10619,31 +10619,6 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			this.web3 = new __WEBPACK_IMPORTED_MODULE_2_web3___default.a(new __WEBPACK_IMPORTED_MODULE_2_web3___default.a.providers.HttpProvider("http://localhost:8545"));
 		}
 		const MyContract = web3.eth.contract([{
-			"constant": true,
-			"inputs": [],
-			"name": "minContribution",
-			"outputs": [{
-				"name": "",
-				"type": "uint256"
-			}],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		}, {
-			"constant": true,
-			"inputs": [{
-				"name": "contributor",
-				"type": "address"
-			}],
-			"name": "checkContributorExists",
-			"outputs": [{
-				"name": "",
-				"type": "bool"
-			}],
-			"payable": false,
-			"stateMutability": "view",
-			"type": "function"
-		}, {
 			"constant": false,
 			"inputs": [],
 			"name": "kill",
@@ -10671,6 +10646,10 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			"stateMutability": "nonpayable",
 			"type": "function"
 		}, {
+			"payable": true,
+			"stateMutability": "payable",
+			"type": "fallback"
+		}, {
 			"inputs": [{
 				"name": "_minimumContribution",
 				"type": "uint256"
@@ -10679,11 +10658,32 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 			"stateMutability": "nonpayable",
 			"type": "constructor"
 		}, {
-			"payable": true,
-			"stateMutability": "payable",
-			"type": "fallback"
+			"constant": true,
+			"inputs": [{
+				"name": "contributor",
+				"type": "address"
+			}],
+			"name": "checkContributorExists",
+			"outputs": [{
+				"name": "",
+				"type": "bool"
+			}],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		}, {
+			"constant": true,
+			"inputs": [],
+			"name": "getTotal",
+			"outputs": [{
+				"name": "",
+				"type": "uint256"
+			}],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
 		}]);
-		this.state.ContractInstance = MyContract.at("0x6f012ed3f2066c475924b71d36d1bd9f22a9ed31");
+		this.state.ContractInstance = MyContract.at("0x61d89802d850d2b18cb7d42afc9a39776b38eb97");
 	}
 
 	componentDidMount() {
@@ -10694,14 +10694,14 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 	}
 
 	updateState() {
-		this.state.ContractInstance.minimumContribution((err, result) => {
+		this.state.ContractInstance.minContribution((err, result) => {
 			if (result != null) {
 				this.setState({
 					minimumContribution: parseFloat(web3.fromWei(result, 'ether'))
 				});
 			}
 		});
-		this.state.ContractInstance.total((err, result) => {
+		this.state.ContractInstance.getTotal((err, result) => {
 			if (result != null) {
 				this.setState({
 					total: parseFloat(web3.fromWei(result, 'ether'))
@@ -10751,7 +10751,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 				{ className: 'block' },
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 					'h3',
-					{ 'class': 'label' },
+					{ className: 'label' },
 					' How much do you want to contribute? '
 				),
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'pot-input', ref: 'ether-input', type: 'number', placeholder: this.state.minimumContribuion }),
